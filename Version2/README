@@ -1,0 +1,15 @@
+Version 2
+
+1. Pileup.c
+   (1) New "LocIndex" function(Binary search method) was added
+   (2) Split the cell genome by FragSize (Defaule 300 which could be modified in "Share.h")
+
+example:
+    __________     __________     __________
+
+    __________     __________     
+
+                   __________     __________
+
+    __________                    __________
+

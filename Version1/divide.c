@@ -1,5 +1,4 @@
-/* Version: 3
- * New: remove the "search" function
+/* Version: 1
  * date: 2017-5-13
  */
 
