@@ -1,4 +1,6 @@
-/* Date: 2017-05-28
+/* Main function
+   Modified: 2017-06-03
+   Fix:(BUG)92: depth = argv[3]
 */
 
 #include "Share.h"
@@ -87,7 +89,7 @@ int Divide_Maline( int argc, char **argv )
 
     uint8_t *fa = LoadRef(argv[0]); /* Load the reference */
     printf("Start the pileup ...\n");
-    pile_t *P = PileInit(fa, atoi(argv[3])); Pileup(P, tree, atoi(argv[2]));
+    pile_t *P = PileInit(fa, atoi(argv[3])); Pileup(P, tree, atoi(argv[3]));
     SnvWrite(argv[1], P); time(&e);
     printf("Total time consume is %.2f\n\n", difftime(e,s));
 
