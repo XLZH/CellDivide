@@ -1,5 +1,7 @@
 /* This is the source file of Pileup
-*  2015-05-28
+   
+   Modified: 2015-06-03
+   Fix:(BUG)BaseSort: insert sort from index 2.
 */
 #include "Share.h"
 
@@ -33,9 +35,9 @@ void BaseSort( pile_t *pile )
     uint32_t num, i, j, *n = pile->num;
     uint8_t base, *b = pile->base;
 
-    for ( i=1; i < 4; i++ ) {
+    for ( i=2; i < 4; i++ ) {
         num = n[i]; base = b[i];
-        for ( j=i; j > 0 && n[j-1] < num; j-- ) {
+        for ( j=i; j > 1 && n[j-1] < num; j-- ) {
             n[j] = n[j-1]; b[j] = b[j-1];
         }
         n[j] = num; b[j] = base;
