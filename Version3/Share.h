@@ -14,7 +14,7 @@
 #define GENERATION 28          // the generation that cultured the cell
 #define GSIZE 4746218          // the genome size of Ecoli
 #define FREQLEVEL 1000000000   // the mutation frequence level for whole genome
-#define SIZE 100000            // default size for memory realocated each time
+#define SIZE 1000000           // default size for memory realocated each time
 #define FRAGSIZE 500           // default fragment size
 
 typedef struct __mut_t {
