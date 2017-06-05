@@ -110,12 +110,14 @@ pile_t *PileInit( uint8_t *ref, int depth )
 void SnvWrite( char *snvname, pile_t *P )
 {
     FILE *fp = fopen(snvname, "w");
+    float altfreq;
 
     fprintf(fp, "Chrom\tPos\tRef\tAlt\tRefnum\tAltnum\n");
     for ( int i=0; i < GSIZE; i++ ) {
         if ( P[i].num[1] ) {
-            fprintf(fp, "Ecoli\t%d\t%c\t%c\t%u\t%u\n", \
-                i+1, P[i].base[0], P[i].base[1], P[i].num[0], P[i].num[1]);
+            altfrq = (float)(P[i].num[1]) / (P[i].num[0] + P[i].num[1]) * 100;
+            fprintf(fp, "Ecoli\t%d\t%c\t%c\t%u\t%u\t%.2f%%\n", \
+                i+1, P[i].base[0], P[i].base[1], P[i].num[0], P[i].num[1], altfreq);
         }
     }
     fclose(fp);
