@@ -1,5 +1,5 @@
 /* This is the source file of Pileup
-   
+
    Modified: 2015-06-03
    Fix:(BUG)BaseSort: insert sort from index 2.
 */
@@ -16,17 +16,19 @@
 
 uint8_t *LoadRef( char *filename )
 {
-    uint8_t *fa;
+    uint8_t *fa, *cur, ch;
+
     FILE *fp = fopen(filename, "r");
-
-    fa = (uint8_t *)malloc((GSIZE +8) * sizeof(uint8_t));
-    if ( !fa ) {
+    if ( !fp ) fprintf(stderr, \
+            "[Err::%s::%d] Failed to open %s!\n", __func__, __LINE__, filename);
+    fa = cur = (uint8_t *)malloc(GSIZE * sizeof(uint8_t));
+    if ( !fa ) 
         fprintf(stderr, \
-                "[Err::%s::%d] Failed to allocate memory!\n", __func__, __LINE__);
-        return NULL;
+            "[Err::%s::%d] Failed to allocate memory!\n", __func__, __LINE__);
+    while ( fgetc(fp) != '\n' ) ; // remove the fasta lines (start with '>')
+    while ( (ch = fgetc(fp)) != 0xff ) {
+        if ( ch != '\n' ) *cur++ = ch;
     }
-    fgets(fa, (GSIZE +1), fp); fgets(fa, (GSIZE +1), fp); fclose(fp);
-
     return fa;
 }
 
@@ -115,8 +117,8 @@ void SnvWrite( char *snvname, pile_t *P )
     fprintf(fp, "Chrom\tPos\tRef\tAlt\tRefnum\tAltnum\n");
     for ( int i=0; i < GSIZE; i++ ) {
         if ( P[i].num[1] ) {
-            altfrq = (float)(P[i].num[1]) / (P[i].num[0] + P[i].num[1]) * 100;
-            fprintf(fp, "Ecoli\t%d\t%c\t%c\t%u\t%u\t%.2f%%\n", \
+            altfreq = (float)(P[i].num[1]) / (P[i].num[0] + P[i].num[1]) * 100;
+            fprintf(fp, "Ecoli\t%d\t%c\t%c\t%u\t%u\t%.2f\n", \
                 i+1, P[i].base[0], P[i].base[1], P[i].num[0], P[i].num[1], altfreq);
         }
     }
