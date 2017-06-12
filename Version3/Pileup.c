@@ -25,9 +25,9 @@ uint8_t *LoadRef( char *filename )
     if ( !fa ) 
         fprintf(stderr, \
             "[Err::%s::%d] Failed to allocate memory!\n", __func__, __LINE__);
-    while ( fgetc(fp) != '\n' ) ; // remove the fasta lines (start with '>')
+    while ( fgetc(fp) != '\n' ) ; // remove the fasta lines that starts with '>'
     while ( (ch = fgetc(fp)) != 0xff ) {
-        if ( ch != '\n' ) *cur++ = ch;
+        if ( ch != '\r' && ch != '\n' ) *cur++ = ch;
     }
     return fa;
 }
@@ -37,7 +37,7 @@ void BaseSort( pile_t *pile )
     uint32_t num, i, j, *n = pile->num;
     uint8_t base, *b = pile->base;
 
-    for ( i=2; i < 4; i++ ) {
+    for ( i=2; i < 4; i++ ) { // insert sort algorithm
         num = n[i]; base = b[i];
         for ( j=i; j > 1 && n[j-1] < num; j-- ) {
             n[j] = n[j-1]; b[j] = b[j-1];
@@ -46,7 +46,7 @@ void BaseSort( pile_t *pile )
     }
 }
 
-int LocIndex( int *clist, int num, int pos )
+int LocIndex( int *clist, int num, uint64_t pos )
 {
     if ( pos <= clist[0] ) return 0;
 
@@ -65,7 +65,7 @@ int LocIndex( int *clist, int num, int pos )
 void Pileup( pile_t *P, tree_t *tree, int depth )
 {
     mut_t *snv; 
-    int *clist, cellnum = 1 << (GENERATION-1);
+    int *clist; uint64_t cellnum = 1 << (GENERATION-1);
 
     clist = (int *)malloc(tree->typenum * sizeof(int));
     if ( !clist )
@@ -77,10 +77,10 @@ void Pileup( pile_t *P, tree_t *tree, int depth )
 
     srand((unsigned)time(NULL));
     for ( int b=0; b < GSIZE; b+=FRAGSIZE) {
-        int start=b, end, index, pos;
+        int start=b, end, index; uint64_t pos;
         end = b+FRAGSIZE > GSIZE ? GSIZE : b+FRAGSIZE;
         for ( int i=0; i < depth; i++ ) { /* random select the cell from pool */
-            pos = rand()%cellnum; 
+            pos = RAND64() % cellnum; 
             index = LocIndex(clist, tree->typenum, pos);
             snv = tree->root[index].snv; DEALSNV(P, snv, start, end);
         }
