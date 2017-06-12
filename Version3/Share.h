@@ -1,5 +1,6 @@
 /* Version: 3
-*  date: 2017-5-28
+*  Modified: 2017-6-9
+*  Add: RAND64(): which range (0, 2^64 -1)
 */
 
 #ifndef Divide_H

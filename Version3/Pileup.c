@@ -1,7 +1,8 @@
 /* This is the source file of Pileup
 
-   Modified: 2015-06-03
+   Modified: 2015-06-09
    Fix:(BUG)BaseSort: insert sort from index 2.
+   Fix:(#LoadRef): deal with fasta that ends with '\r\n'
 */
 #include "Share.h"
 

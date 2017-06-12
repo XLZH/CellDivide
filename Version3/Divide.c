@@ -1,5 +1,5 @@
 /* Divide function
-   Modified: 2017-5-28
+   Modified: 2017-6-9
 */
 #include "Share.h"
 
