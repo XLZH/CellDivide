@@ -1,5 +1,5 @@
 /* Divide function
- * date: 2017-5-28
+   Modified: 2017-5-28
 */
 #include "Share.h"
 
@@ -30,9 +30,9 @@ void InsertAlt( mut_t *new, const mut_t *f, uint32_t pos, uint8_t type )
 mut_t *Mutator( const mut_t *f )
 {
     uint8_t type, mtype[4] = {65, 67, 71, 84};
-    mut_t *snv; uint32_t pos = 0;
+    mut_t *snv; uint64_t pos = 0;
 
-    pos = rand() % FREQLEVEL; type = mtype[rand() % 4];
+    pos = RAND64() % FREQLEVEL; type = mtype[rand() % 4];
     if ( pos <= GSIZE ) {
         snv = (mut_t *)malloc(sizeof(mut_t));
         snv->pos = (uint32_t *)malloc((f->altnum +1) * sizeof(uint32_t));

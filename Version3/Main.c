@@ -24,10 +24,23 @@ void Usage( void )
     fprintf(stderr, "%s", usage); exit(-1);
 }
 
+void Parameter( void )
+{
+    uint64_t a = FREQLEVEL, b = 0;
+
+    for ( a; a >= 10; a /= 10 ) b++;
+    fprintf(stderr,
+            "GenomeSize: %d\n"
+            "Generation: %d\n"
+            "Freqlevel: %uE%u\n", GSIZE, GENERATION -1, a, b);
+}
+
+
 int Divide_Normal( int argc, char **argv )
 {
     mut_t *snv; time_t s, e;
 
+    Parameter();
     time(&s); srand((unsigned)time(NULL)); /* random the seed */
     tree_t *tree = Init(snv, 0);
     for ( int i=0; i < GENERATION-1; i++ ) {
@@ -61,8 +74,10 @@ int Divide_Maline( int argc, char **argv )
             "[Err::%s::%d] Failed to allocate memory!\n", __func__, __LINE__);
         return (-1);
     } time(&s);
+
+    Parameter();
+    srand((unsigned)time(NULL)); /* random the seed */
     for ( int p=0; p < pronum; p++ ) {
-        srand((unsigned)time(NULL)); /* random the seed */
         tree = Init(&snv, 1);
         printf("\rStart proliferaing for the %d times ...", p+1); fflush(stdout);
         for ( int i=0; i < GENERATION-1; i++ ) Divide(tree, i);
@@ -76,7 +91,7 @@ int Divide_Maline( int argc, char **argv )
         for ( int i=1; i < tree->typenum; i++ )
             clist[i] = clist[i-1] + tree->root[i].cellnum[GENERATION-1];
 
-        int pos = rand() % ( 1 << (GENERATION-1) ); 
+        uint64_t pos = RAND64() % (1 << (GENERATION-1)); 
         int index = LocIndex(clist, tree->typenum, pos);
         mut_t *tmp = tree->root[index].snv;
 
