@@ -11,11 +11,14 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define GENERATION 28          // the generation that cultured the cell
-#define GSIZE 4746218          // the genome size of Ecoli
-#define FREQLEVEL 1000000000   // the mutation frequence level for whole genome
-#define SIZE 1000000           // default size for memory realocated each time
+#define GENERATION 29          // the generation that cultured the cell
+#define GSIZE 4639675          // the genome size of Ecoli
+#define FREQLEVEL 4000000000   // the mutation frequence level for whole genome
+#define SIZE 5000000           // default size for memory realocated each time
 #define FRAGSIZE 500           // default fragment size
+
+#define RAND64() ( (((uint64_t)rand() << 0) & 0x00000000FFFFFFFF) | \
+                   (((uint64_t)rand() << 32) & 0xFFFFFFFF00000000) )
 
 typedef struct __mut_t {
     uint32_t    altnum;  // snv num for this cell type
@@ -50,7 +53,7 @@ void Destory( tree_t * );
 uint8_t *LoadRef( char * );
 pile_t *PileInit( uint8_t *, int );
 void Pileup( pile_t *, tree_t *, int );
-int LocIndex( int *, int, int );
+int LocIndex( int *, int, uint64_t );
 void BaseSort( pile_t * );
 void SnvWrite( char *, pile_t * );
 
