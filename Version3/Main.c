@@ -1,6 +1,7 @@
 /* Main function
-   Modified: 2017-06-03
+   Modified: 2017-06-21
    Fix:(BUG)92: depth = argv[3]
+   Fix:(BUG)71&72: GENERATION => GSIZE
 */
 
 #include "Share.h"
@@ -67,8 +68,8 @@ int Divide_Maline( int argc, char **argv )
     time_t s, e;
 
     snv.altnum = 0; pronum = atoi(argv[2]);
-    snv.pos = (uint32_t *)malloc(GENERATION * sizeof(uint32_t));
-    snv.type = (uint8_t *)malloc(GENERATION * sizeof(uint8_t));
+    snv.pos = (uint32_t *)malloc(GSIZE * sizeof(uint32_t));
+    snv.type = (uint8_t *)malloc(GSIZE * sizeof(uint8_t));
     if ( !snv.pos || !snv.type ) {
         fprintf(stderr, \
             "[Err::%s::%d] Failed to allocate memory!\n", __func__, __LINE__);
