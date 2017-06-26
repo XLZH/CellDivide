@@ -4,7 +4,7 @@
 void Usage( int opt )
 {
     char *usage_c = 
-        "\nUsage: celldiv <comand> [options]\n"
+        "\nUsage: celldivde <comand> [options]\n"
         "\n"
         "Comands:\n"
         "    normal             Normal division\n"
@@ -14,7 +14,7 @@ void Usage( int opt )
         "                       Cell dividing in a maline, which transfer for specific\n"
         "                       times and specific generation for each transfer\n\n";
     char *usage_n =
-        "\nUsage: celldiv normal [options]\n"
+        "\nUsage: celldivde normal [options]\n"
         "\n"
         "Options:\n"
         "       -h|--help             print help infomation\n"
@@ -24,7 +24,7 @@ void Usage( int opt )
         "       -r|--mutrate          [scientific] mutation rate for cell division[eg: 2.5E-9]\n"
         "       -g|--generation       [integer] generation for each transfer\n\n";
     char *usage_m =
-        "\nUsage: celldiv maline [options]\n"
+        "\nUsage: celldivde maline [options]\n"
         "\n"
         "Options:\n"
         "       -h|--help             print help infomation\n"
